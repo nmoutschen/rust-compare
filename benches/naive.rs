@@ -22,7 +22,7 @@ pub fn criterion_benchmark(c: &mut Criterion) {
                 let user_agent = user_agents[i as usize % user_agents.len()];
                 black_box(naive.contains(user_agent));
             }
-            start.elapsed()
+            start.elapsed() / user_agents.len() as u32
         })
     });
 }

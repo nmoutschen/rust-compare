@@ -1,7 +1,7 @@
 use std::time::Instant;
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use rust_compare::{aho_corasick::AhoCorasick, Contains};
+use rust_compare::{AhoCorasick, Contains};
 
 const BAD_BOTS: &str = include_str!("../bad_bots.txt");
 const USER_AGENTS: &str = include_str!("../user_agents.txt");
@@ -15,7 +15,7 @@ pub fn criterion_benchmark(c: &mut Criterion) {
 
     let aho_corasick = AhoCorasick::new(bad_bots);
 
-    c.bench_function("aho_corasick", |b| {
+    c.bench_function("aho_corasick_nfa", |b| {
         b.iter_custom(|iters| {
             let start = Instant::now();
             for i in 0..iters {

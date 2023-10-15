@@ -1,7 +1,7 @@
 use std::time::Instant;
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use rust_compare::{Contains, Naive};
+use rust_compare::{Contains, ACDFA};
 
 const BAD_BOTS: &str = include_str!("../bad_bots.txt");
 const USER_AGENTS: &str = include_str!("../user_agents.txt");
@@ -13,14 +13,14 @@ pub fn criterion_benchmark(c: &mut Criterion) {
         .collect::<Vec<_>>();
     let user_agents = USER_AGENTS.split('\n').collect::<Vec<_>>();
 
-    let naive = Naive::new(bad_bots);
+    let aho_corasick = ACDFA::new(bad_bots);
 
-    c.bench_function("naive", |b| {
+    c.bench_function("aho_corasick_dfa", |b| {
         b.iter_custom(|iters| {
             let start = Instant::now();
             for i in 0..iters {
                 let user_agent = user_agents[i as usize % user_agents.len()];
-                black_box(naive.contains(user_agent));
+                black_box(aho_corasick.contains(user_agent));
             }
             start.elapsed()
         })

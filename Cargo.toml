@@ -10,11 +10,16 @@ aho-corasick = "1.1.2"
 
 [dev-dependencies]
 criterion = "0.5.1"
+dhat = "0.3.2"
 
 [[bench]]
 name = "naive"
 harness = false
 
 [[bench]]
-name = "aho_corasick"
+name = "ac"
+harness = false
+
+[[bench]]
+name = "ac_dfa"
 harness = false
